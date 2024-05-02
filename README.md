@@ -1,4 +1,4 @@
-# FoliFind
+# FoliFind 🌱
 The plant identification app.
 
 ## What is it?
@@ -6,7 +6,7 @@ FoliFind is a personal project I'm currently working on. The goal is to create a
 
 ## Project Mockup
 <image src="/mockups/Mockup_v1.png" alt="FoliFind mockup png version one" width="220px">
-_Mockup v.1 of Greenhouse tab_
+<i>Mockup v.1 of Greenhouse tab</i>
 
 ## Future Plans
  Some features I've considered to add in the future:
