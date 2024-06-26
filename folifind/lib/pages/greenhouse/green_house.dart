@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:folifind/pages/greenhouse/plant_item.dart';
+import 'package:folifind/assets/constants.dart' as Constants;
 
 /// Creates the Greenhouse page
 class GreenHouse extends StatelessWidget {
@@ -13,7 +14,7 @@ class GreenHouse extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('FOLIFIND'),
-        backgroundColor: Color.fromRGBO(228, 233, 218, 1.0),
+        backgroundColor: Constants.appBarBackgroundColor,
         ),
       body: 
         Column(
