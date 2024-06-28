@@ -15,7 +15,7 @@ class GreenHouse extends StatelessWidget {
 
     // Test data
     List<String> randomPlants = TestList().randomPlants();
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('FOLIFIND'),
@@ -26,17 +26,15 @@ class GreenHouse extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.topLeft,
-              child: Padding(
+              child: Container(
                 padding: EdgeInsets.only(left: 40, top: 40),
+                margin: EdgeInsets.only(bottom: 24),
                 child: Text(
                   'My\nGreenhouse',
                   textScaler: TextScaler.linear(2.5),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle( fontWeight: FontWeight.bold ),
                 ),
-                
-                ),
+              ),
             ),
             Row(
               mainAxisSize: MainAxisSize.max,
@@ -44,7 +42,7 @@ class GreenHouse extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 70, bottom: 10),
-                  child: SizedBox(child: Text('sort'),),
+                  child: SizedBox(child: Text('sort'))
                 ),
                 Padding(
                   padding: EdgeInsets.only(right: 70, bottom: 10),
@@ -56,8 +54,8 @@ class GreenHouse extends StatelessWidget {
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
+                  mainAxisSpacing: 30,
+                  crossAxisSpacing: 6,
                   childAspectRatio: 1,
                   ),
                 itemCount: randomPlants.length,

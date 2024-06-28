@@ -24,8 +24,9 @@ class PlantItem extends StatelessWidget {
     return Column(
       children:[
         Container(
-          width: Constants.plantItemSize,
-          height: Constants.plantItemSize,
+          width: MediaQuery.of(context).size.width * Constants.plantItemSize,
+          height: MediaQuery.of(context).size.width * Constants.plantItemSize,
+          margin: EdgeInsets.only(bottom: 8),
           decoration: BoxDecoration(
             border: Border.all(
               width: 1,
