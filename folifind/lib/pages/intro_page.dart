@@ -6,14 +6,45 @@ class IntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Intro page'),),
-      body: Center(
-        child: ElevatedButton(
-        child: const Text("Go to Greenhouse"),
-        onPressed: () {
-          Navigator.pushNamed(context, '/greenhouse');
-        },
-        ),
+      appBar: AppBar(title: const Text('Intro page'),), // top banner
+      // bottomNavigationBar: BottomNavigationBar(
+      //   onTap: (int index) {
+          
+      //   },
+      //   items: [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home)
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.add)
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.add_a_photo)
+      //     ),
+      //   ],
+      // )
+      body:
+      Column(
+        children: <Widget>[
+          ElevatedButton(
+            child: const Text("Home"),
+            onPressed: () {
+              Navigator.pushNamed(context, '/');
+            },
+          ),
+          ElevatedButton(
+            child: const Text("Greenhouse"),
+            onPressed: () {
+              Navigator.pushNamed(context, '/greenhouse');
+            },
+          ),
+          ElevatedButton(
+            child: const Text("Scanner"),
+            onPressed: () {
+              Navigator.pushNamed(context, '/scanner');
+            },
+          )
+        ]
         ),
     );
   }
