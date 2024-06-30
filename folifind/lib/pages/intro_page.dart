@@ -8,12 +8,23 @@ class IntroPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Intro page'),),
       body: Center(
-        child: ElevatedButton(
-        child: const Text("Go to Greenhouse"),
-        onPressed: () {
-          Navigator.pushNamed(context, '/greenhouse');
-        },
-        ),
+        child: Column(
+          children: [
+            ElevatedButton(
+              child: const Text("Go to Greenhouse"),
+              onPressed: () {
+                Navigator.pushNamed(context, '/greenhouse');
+              },
+            ),
+            ElevatedButton(
+              child: const Text("Go to Search plants"),
+              onPressed: () {
+                Navigator.pushNamed(context, '/search');
+              },
+            ),
+          ],
+          )
+        
         ),
     );
   }
