@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:folifind/pages/intro_page.dart';
 import 'package:folifind/pages/greenhouse/green_house.dart';
 import 'package:folifind/pages/plant-scanner/plant_scanner.dart';
+import 'package:folifind/pages/plant-search/plant_search.dart';
 
 
 void main() {
@@ -17,10 +18,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.deepPurple),
       initialRoute: '/',
-      routes: {
+      routes: { // define routes
         '/': (context) => const IntroPage(),
         '/greenhouse': (context) => const GreenHouse(),
-        '/scanner': (context) => const PlantScanner()
+        '/scanner': (context) => const PlantScanner(),
+        '/search': (context) => const PlantSearch(),
       },
   );
   }

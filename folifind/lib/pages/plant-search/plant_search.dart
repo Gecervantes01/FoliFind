@@ -68,7 +68,7 @@ class PlantSearchState extends State<PlantSearch> {
               visible: isLoaded,
               replacement: const Text('No plants'),
               child:  ListView.builder(
-                  itemCount: plantData?.length,
+                  itemCount: 5,
                   itemBuilder: (context, index) {
                     return Container(
                       child: Text(plantData![index].data.toString()),
