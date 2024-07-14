@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:folifind/pages/intro_page.dart';
 import 'package:folifind/pages/greenhouse/green_house.dart';
+import 'package:folifind/pages/plant-scanner/plant_scanner.dart';
 import 'package:folifind/pages/plant-search/plant_search.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:folifind/tests/boxes.dart';
@@ -25,9 +26,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.deepPurple),
-      home: const IntroPage(),
-      routes: {
+      initialRoute: '/',
+      routes: { // define routes
+        '/': (context) => const IntroPage(),
         '/greenhouse': (context) => const GreenHouse(),
+        '/scanner': (context) => const PlantScanner(),
         '/search': (context) => const PlantSearch(),
       },
   );

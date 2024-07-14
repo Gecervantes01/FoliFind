@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:folifind/assets/navbar.dart';
 import 'package:folifind/pages/greenhouse/plant_item.dart';
 import 'package:folifind/assets/constants.dart' as Constants;
 import 'package:folifind/tests/boxes.dart';
@@ -51,6 +52,7 @@ class GreenHouse extends StatelessWidget {
             displayPlants()
           ],
       ),
+      bottomNavigationBar: Navbar(context).getNav(),
     );
   }
 
