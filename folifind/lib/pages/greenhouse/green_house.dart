@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:folifind/pages/greenhouse/plant_item.dart';
 import 'package:folifind/assets/constants.dart' as Constants;
-import 'package:folifind/tests/test_list.dart';
+import 'package:folifind/tests/boxes.dart';
+import 'package:folifind/tests/test_db.dart';
 
 /// Creates the Greenhouse page
 /// 
@@ -12,9 +13,6 @@ class GreenHouse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    // Test data
-    List<String> randomPlants = TestList().randomPlants();
 
     return Scaffold(
       appBar: AppBar(
@@ -50,23 +48,31 @@ class GreenHouse extends StatelessWidget {
                 )
               ],
             ),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 30,
-                  crossAxisSpacing: 6,
-                  childAspectRatio: 1,
-                  ),
-                itemCount: randomPlants.length,
-                itemBuilder: (context, index) {
-                  String plantName = randomPlants[index];
-                  return PlantItem(plantName: plantName);
-                },
-              ),
-            ),
+            displayPlants()
           ],
       ),
     );
+  }
+
+  static Widget displayPlants() {
+    if(testBox.length > 0) {
+      return Expanded(
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 30,
+            crossAxisSpacing: 6,
+            childAspectRatio: 1,
+            ),
+          itemCount: testBox.length,
+          itemBuilder: (context, index) {
+            // Creates and returns a PlantItem Widget using the data stored in testBox
+            return PlantItem(plantName: testBox.getAt(index)); 
+          },
+        ),
+      );
+    }
+
+    return Center(child: Text('Your greenhouse is empty!'));
   }
 }

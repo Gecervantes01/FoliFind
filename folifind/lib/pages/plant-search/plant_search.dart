@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:folifind/assets/constants.dart' as Constants;
 import 'package:folifind/models/plant_data.dart';
-import 'package:folifind/services/remote_services.dart';
+import 'package:folifind/pages/plant-search/plant_searchBar.dart';
+import 'package:http/http.dart' as http;
 
 /// Creates the Plant search page
 /// 
@@ -15,7 +18,7 @@ class PlantSearch extends StatefulWidget {
 }
 
 class PlantSearchState extends State<PlantSearch> {
-  List<PlantData>? plantData;
+  List<PlantData> plants = [];
   var isLoaded = false;
 
   @override
@@ -23,21 +26,34 @@ class PlantSearchState extends State<PlantSearch> {
     super.initState();
 
     // fetch data from API
-    getData();
+    getPlants();
   }
 
-  getData() async {
-    plantData = await RemoteService().getPlantData();
-    if(plantData != null) {
-      setState( () {
+  Future<void> getPlants() async {
+    Map<String, String> headers = {"Access-Control-Origin" : "*", "Access-Control-Allow-Methods": "GET,PUT,PATCH,POST,DELETE", "Access-Control-Allow-Headers": "Origin, X-Requested-With,Content-Type,Accept" };
+
+    try {
+      var url = Uri.https('trefle.io', '/api/v1/plants?token=xsSBiz7iRzfZEIiZIlJiKeU9JlxKVH3QIKL4rHlYvQg');
+      var response = await http.get(url, headers: headers);
+      var jsonData = jsonDecode(response.body);
+      List<PlantData> loadedPlants = [];
+
+      for(var eachPlant in jsonData['data']) {
+        final plant = PlantData(plantName: eachPlant['common_name'], plantCycle: eachPlant['year']);
+        loadedPlants.add(plant);
+      }
+
+      setState(() {
+        plants = loadedPlants;
         isLoaded = true;
       });
+    } catch(e) {
+      print('Error fetching plants: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search'),
@@ -56,96 +72,46 @@ class PlantSearchState extends State<PlantSearch> {
                   maxWidth: MediaQuery.of(context).size.width * 0.90,
                   minHeight: 50,
                   ),
-                // onTap:() {
-                //   showSearch(
-                //     context: context, 
-                //     delegate: CustomSearchDelegate()
-                //   );
-                // },
+                onTap:() {
+                  showSearch(
+                    context: context, 
+                    delegate: PlantSearchBar()
+                  );
+                },
               ),
             ),
-            Visibility(
-              visible: isLoaded,
-              replacement: const Text('No plants'),
-              child:  ListView.builder(
-                  itemCount: plantData?.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      child: Text(plantData![index].data.toString()),
-                    );
+            FutureBuilder(
+              future: getPlants(), 
+              builder: (context, snapshot) {
+                if(snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  if(snapshot.hasError) {
+                    return Center(child: Text('Error loading plants'));
+                  } else {
+                    if(isLoaded) {
+                      return Expanded(
+                        child: ListView.builder(
+                          itemCount: plants.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text(plants[index].plantName)
+                            );
+                          },
+                        ),
+                      );
+                    } else {
+                      return Center(child: Text('No Plants'));
+                    }
                   }
-                ),
-              ),
-          
+                  
+                }
+              }
+            ),
         ],
-      )
-            
-      );
+      ) 
+    );
   }
 }
-
-// class CustomSearchDelegate extends SearchDelegate {
-
-//   @override
-//   List<Widget>? buildActions(BuildContext context) {
-//     return [
-//       IconButton(
-//         onPressed: () {
-//           query = '';
-//         },
-//         icon: Icon(Icons.clear),
-//         ),
-//     ];
-//   }
-
-//    @override
-//   Widget? buildLeading(BuildContext context) {
-//     return IconButton(
-//       onPressed: () {
-//         close(context, null);
-//       },
-//       icon: Icon(Icons.arrow_back),
-//     );
-//   }
- 
-//   // third overwrite to show query result
-//   @override
-//   Widget buildResults(BuildContext context) {
-//     List<String> matchQuery = [];
-//     for (var plant in plantData) {
-//       if (plant.toLowerCase().contains(query.toLowerCase())) {
-//         matchQuery.add(plant);
-//       }
-//     }
-//     return ListView.builder(
-//       itemCount: matchQuery.length,
-//       itemBuilder: (context, index) {
-//         var result = matchQuery[index];
-//         return ListTile(
-//           title: Text(result),
-//         );
-//       },
-//     );
-//   }
- 
-//   // last overwrite to show the 
-//   // querying process at the runtime
-//   @override
-//   Widget buildSuggestions(BuildContext context) {
-//     List<String> matchQuery = [];
-//     for (var fruit in searchTerms) {
-//       if (fruit.toLowerCase().contains(query.toLowerCase())) {
-//         matchQuery.add(fruit);
-//       }
-//     }
-//     return ListView.builder(
-//       itemCount: matchQuery.length,
-//       itemBuilder: (context, index) {
-//         var result = matchQuery[index];
-//         return ListTile(
-//           title: Text(result),
-//         );
-//       },
-//     );
-//   }
-// }
